@@ -1,0 +1,49 @@
+:root {
+  --red: #E87A7A;         /* Soft Red */
+  --orange: #F4B183;      /* Warm Orange */
+  --green: #A8D5BA;       /* Muted Green (complement) */
+  --bg-light: #FDF6F0;    /* Light peach background */
+  --text-gray: #374151;   /* Neutral dark gray text */
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-gray);
+}
+
+.top-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, var(--red), var(--orange));
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.middle-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.footer-section {
+  padding: 1rem;
+  background-color: #fdecea; /* very soft red background */
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--red);
+  border-top: 1px solid var(--orange);
+}
+.footer-section .accent {
+  color: var(--green);
+  font-weight: 600;
+}
