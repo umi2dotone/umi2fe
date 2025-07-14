@@ -1,62 +1,68 @@
-import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Profile.css';
 
 export default function Profile() {
   const { user, logout } = useAuth();
-  const [newAdminEmail, setNewAdminEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [msg, setMsg] = useState('');
+  const [showAdminForm, setShowAdminForm] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddAdmin = async () => {
-    const token = sessionStorage.getItem('token');
     try {
-      const res = await fetch('https://api.umi2.one/auth/admin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ targetEmail: newAdminEmail }) // ✅ updated to match backend
+      const token = sessionStorage.getItem('token');
+      const res = await axios.post('https://api.umi2.one/auth/admin', { targetEmail: email }, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-
-      const data = await res.json();
-      if (res.ok) {
-        setMessage(`✅ ${newAdminEmail} is now an admin.`);
-        setNewAdminEmail('');
-      } else {
-        setMessage(`❌ Failed: ${data.error || 'Unknown error'}`);
-      }
+      setMsg(res.data.message);
     } catch (err) {
-      console.error(err);
-      setMessage('❌ Network error');
+      setMsg(err.response?.data?.error || 'Error promoting user');
     }
   };
 
   return (
     <div className="profile-page">
-      <h1>Welcome, {user?.email}</h1>
+      <div className="card">
+        <h2>Welcome, {user?.email}</h2>
+      </div>
 
-      {user?.role === 'ADMIN' && (
-        <div className="admin-section">
-          <h2>👑 Add a new admin</h2>
+      <div className="card toggle-card">
+        <div className="toggle-open-button" onClick={() => navigate('/')}>
+          🍱 See what’s on the menu
+        </div>
+      </div>
+
+      {showAdminForm ? (
+        <div className="card admin-card">
+          <div className="admin-header">
+            <h3>Promote New Admin</h3>
+            <button className="close-button" onClick={() => setShowAdminForm(false)}>✕</button>
+          </div>
           <input
             type="email"
-            value={newAdminEmail}
-            onChange={(e) => setNewAdminEmail(e.target.value)}
-            placeholder="Enter user's email"
+            placeholder="Enter email to promote"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
-          <button onClick={handleAddAdmin}>Add Admin</button>
-          {message && <p>{message}</p>}
+          <button className="admin-button" onClick={handleAddAdmin}>
+            Add Admin
+          </button>
+          {msg && <p className="status-message">{msg}</p>}
+        </div>
+      ) : (
+        <div className="card toggle-card">
+          <button className="toggle-open-button" onClick={() => setShowAdminForm(true)}>
+            ➕ Show Admin Tools
+          </button>
         </div>
       )}
 
-      <hr />
-      <p>🧾 Order history: (placeholder)</p>
-      <button onClick={() => (window.location.href = '/')}>
-        See what's on the menu today 🍱
+      <button className="logout-button" onClick={logout}>
+        Logout
       </button>
-
-      <br /><br />
-      <button onClick={logout}>Logout</button>
     </div>
   );
 }
