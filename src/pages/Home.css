@@ -1,0 +1,48 @@
+.home-container {
+    padding: 1rem;
+}
+
+.home-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #ff4d4f;
+}
+
+.home-loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 18px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.home-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.home-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.home-info {
+    padding: 0.75rem;
+}
+
+.home-price {
+    font-weight: bold;
+    color: #333;
+    margin-top: 0.25rem;
+}

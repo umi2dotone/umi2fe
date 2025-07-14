@@ -1,27 +1,28 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import TabLayout from './components/TabLayout';
 import Login from './pages/Login';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 import Profile from './pages/Profile';
-import Menu from './pages/Menu';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import ProtectedRoute from "./ProtectedRoute";
 
-export default function App() {
-
+function App() {
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        element={
           <ProtectedRoute>
-            <Profile />
+            <TabLayout />
           </ProtectedRoute>
-        } />
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Menu />
-          </ProtectedRoute>
-        } />
-      </Routes>
-    </GoogleOAuthProvider>
+        }
+      >
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+    </Routes>
   );
 }
+
+export default App;
