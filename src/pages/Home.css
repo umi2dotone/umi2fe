@@ -46,3 +46,29 @@
     color: #333;
     margin-top: 0.25rem;
 }
+
+.home-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.home-add-button {
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.home-add-button:hover {
+  background-color: #e64545;
+}
+
+.home-add-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

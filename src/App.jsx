@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
-
+import {CartProvider} from "./context/CartContext";
 function App() {
   return (
     <Routes>
@@ -13,7 +13,9 @@ function App() {
       <Route
         element={
           <ProtectedRoute>
-            <TabLayout />
+            <CartProvider>
+              <TabLayout />
+            </CartProvider>
           </ProtectedRoute>
         }
       >
