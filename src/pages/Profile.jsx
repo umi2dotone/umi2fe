@@ -1,11 +1,9 @@
 import { useAuth } from '../context/AuthContext';
 import { useEffect, useState } from 'react';
-import api from '../utils/apiClient';
 import './Profile.css';
 
 const Profile = () => {
   const { user, logout } = useAuth();
-
   const [form, setForm] = useState({ name: '', description: '', price: '', imageFile: null });
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState('');
@@ -105,6 +103,7 @@ const Profile = () => {
       reader.readAsDataURL(editForm.imageFile);
     } else {
       update(editPreview);
+
     }
   };
 
