@@ -1,12 +1,36 @@
 import { useCart } from '../context/CartContext';
+import api from '../utils/apiClient';
 import './Cart.css';
 
 const Cart = () => {
     const { cart, updateQuantity } = useCart();
 
+    const handleCheckout = async () => {
+        try {
+            const response = await api.post('/payment/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: cart }),
+            });
+
+            const data = await response.json();
+
+            if (data.url) {
+                window.location.href = data.url; // Redirect to Stripe Checkout
+            } else {
+                alert('Failed to start checkout');
+            }
+        } catch (error) {
+            console.error('Checkout error:', error);
+            alert('Error during checkout. Please try again.');
+        }
+    };
+
     if (cart.length === 0) {
         return <div className="cart-empty">🛒 Your cart is empty.</div>;
     }
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     return (
         <div className="gradient-page">
@@ -33,7 +57,10 @@ const Cart = () => {
                 ))}
 
                 <div className="cart-total">
-                    <h3>Total: ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</h3>
+                    <h3>Total: ${total.toFixed(2)}</h3>
+                    <button className="checkout-button" onClick={handleCheckout}>
+                        Checkout
+                    </button>
                 </div>
             </div>
         </div>

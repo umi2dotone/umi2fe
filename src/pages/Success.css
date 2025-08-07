@@ -1,0 +1,24 @@
+.success-page {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(to right, #ff9966, #ff5e62);
+  color: white;
+  min-height: 100vh;
+}
+
+.success-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.success-page button {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  background-color: white;
+  color: #ff5e62;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
