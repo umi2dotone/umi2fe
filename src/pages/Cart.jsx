@@ -8,12 +8,17 @@ const Cart = () => {
     const handleCheckout = async () => {
         try {
             const response = await api.post('/payment/create-checkout-session', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: cart }),
+                 items: cart.map((item)=>{
+                    return { 
+                        id: item.id, 
+                        quantity: item.quantity, 
+                        price: item.price, 
+                        name: item.name
+                    };
+                }),
             });
 
-            const data = await response.json();
+            const data = response.data;
 
             if (data.url) {
                 window.location.href = data.url; // Redirect to Stripe Checkout
